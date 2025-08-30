@@ -10,7 +10,10 @@ def main():
 
     # Detect Players
     player_tracker = PlayerTracker(model_path='yolov8x')
-    player_detections = player_tracker.detect_frames(video_frames)
+    player_detections = player_tracker.detect_frames(video_frames,
+                                                     read_from_stub=False,
+                                                     stub_path="tracker_stubs/player_detections.pkl"
+                                                     )
 
     # Draw output
 
