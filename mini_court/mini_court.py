@@ -18,6 +18,7 @@ class MiniCourt():
         self.set_canvas_background_box_position(frame)
         self.set_mini_court_position()
         self.set_court_drawing_key_points()
+        self.set_court_lines()
 
     def convert_meters_to_pixels(self, meters):
         return convert_meters_to_pixel_distance(meters,
@@ -70,6 +71,20 @@ class MiniCourt():
         drawing_key_points[27] = drawing_key_points[21] 
 
         self.drawing_key_points=drawing_key_points
+
+    def set_court_lines(self):
+        self.lines = [
+            (0, 2),
+            (4, 5),
+            (6,7),
+            (1,3),
+            
+            (0,1),
+            (8,9),
+            (10,11),
+            (10,11),
+            (2,3)
+        ]
 
     def set_mini_court_position(self):
         self.court_start_x = self.start_x + self.padding_court
