@@ -101,3 +101,22 @@ class MiniCourt():
         self.end_y = self.buffer + self.drawing_rectangle_height
         self.start_x = self.end_x - self.drawing_rectangle_width
         self.start_y = self.end_y - self.drawing_rectangle_height
+
+    def draw_background_rectangle(self,frame):
+        shapes = np.zeros_like(frame,np.uint8)
+        # Draw the rectangle
+        cv2.rectangle(shapes, (self.start_x, self.start_y), (self.end_x, self.end_y), (255, 255, 255), cv2.FILLED)
+        out = frame.copy()
+        alpha=0.5
+        mask = shapes.astype(bool)
+        out[mask] = cv2.addWeighted(frame, alpha, shapes, 1 - alpha, 0)[mask]
+
+        return out
+    
+    def draw_mini_court(self,frames):
+        output_frames = []
+        for frame in frames:
+            frame = self.draw_background_rectangle(frame)
+            frame = self.draw_court(frame)
+            output_frames.append(frame)
+        return output_frames
