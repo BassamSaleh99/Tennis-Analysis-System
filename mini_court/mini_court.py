@@ -102,6 +102,13 @@ class MiniCourt():
         self.start_x = self.end_x - self.drawing_rectangle_width
         self.start_y = self.end_y - self.drawing_rectangle_height
 
+    def draw_court(self,frame):
+        for i in range(0, len(self.drawing_key_points),2):
+            x = int(self.drawing_key_points[i])
+            y = int(self.drawing_key_points[i+1])
+            cv2.circle(frame, (x,y),5, (0,0,255),-1)
+        return frame
+
     def draw_background_rectangle(self,frame):
         shapes = np.zeros_like(frame,np.uint8)
         # Draw the rectangle
