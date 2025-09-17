@@ -7,7 +7,8 @@ from utils import (
     convert_meters_to_pixel_distance,
     convert_pixel_distance_to_meters,
     get_foot_position,
-    get_closest_keypoint_index
+    get_closest_keypoint_index,
+    get_height_of_bbox
 )
 
 class MiniCourt():
@@ -164,3 +165,9 @@ class MiniCourt():
 
                 # Get The closest keypoint in pixels
                 closest_key_point_index = get_closest_keypoint_index(foot_position,original_court_key_points, [0,2,12,13])
+
+                # Get Player height in pixels
+                frame_index_min = max(0, frame_num-20)
+                frame_index_max = min(len(player_boxes), frame_num+50)
+                bboxes_heights_in_pixels = [get_height_of_bbox(player_boxes[i][player_id]) for i in range (frame_index_min,frame_index_max)]
+                max_player_height_in_pixels = max(bboxes_heights_in_pixels)
