@@ -59,6 +59,15 @@ def main():
                                                                            constants.DOUBLE_LINE_WIDTH,
                                                                            mini_court.get_width_of_mini_court()
                                                                            ) 
+        
+        # Speed of the ball shot in km/h
+        speed_of_ball_shot = distance_covered_by_ball_meters/ball_shot_time_in_seconds * 3.6
+
+        # player who shot the ball
+        player_positions = player_mini_court_detections[start_frame]
+        player_shot_ball = min( player_positions.keys(), key=lambda player_id: measure_distance(player_positions[player_id],
+                                                                                                 ball_mini_court_detections[start_frame][1]))
+
 
     # Draw output
 
