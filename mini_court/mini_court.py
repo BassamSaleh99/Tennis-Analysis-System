@@ -240,3 +240,12 @@ class MiniCourt():
                     output_player_boxes.append(output_player_bboxes_dict)
 
         return output_player_boxes , output_ball_boxes
+    
+    def draw_points_on_mini_court(self,frames,postions, color=(0,255,0)):
+        for frame_num, frame in enumerate(frames):
+            for _, position in postions[frame_num].items():
+                x,y = position
+                x= int(x)
+                y= int(y)
+                cv2.circle(frame, (x,y), 5, color, -1)
+        return frames
