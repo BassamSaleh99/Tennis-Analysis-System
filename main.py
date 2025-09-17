@@ -8,6 +8,8 @@ from trackers import PlayerTracker, BallTracker
 from court_line_detector import CourtLineDetector
 from mini_court import MiniCourt
 import cv2
+import pandas as pd
+from copy import deepcopy
 
 def main():
     # Read Video
@@ -92,6 +94,17 @@ def main():
                                                                            ) 
         
         speed_of_opponent = distance_covered_by_opponent_meters/ball_shot_time_in_seconds * 3.6
+
+        current_player_stats= deepcopy(player_stats_data[-1])
+        current_player_stats['frame_num'] = start_frame
+        current_player_stats[f'player_{player_shot_ball}_number_of_shots'] += 1
+        current_player_stats[f'player_{player_shot_ball}_total_shot_speed'] += speed_of_ball_shot
+        current_player_stats[f'player_{player_shot_ball}_last_shot_speed'] = speed_of_ball_shot
+
+        current_player_stats[f'player_{opponent_player_id}_total_player_speed'] += speed_of_opponent
+        current_player_stats[f'player_{opponent_player_id}_last_player_speed'] = speed_of_opponent
+
+        player_stats_data.append(current_player_stats)
 
     # Draw output
 
