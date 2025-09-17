@@ -170,6 +170,19 @@ class MiniCourt():
                                                                                 player_height_in_meters,
                                                                                 player_height_in_pixels
                                                                           )
+        
+        # Convert to mini court coordinates
+        mini_court_x_distance_pixels = self.convert_meters_to_pixels(distance_from_keypoint_x_meters)
+        mini_court_y_distance_pixels = self.convert_meters_to_pixels(distance_from_keypoint_y_meters)
+        closest_mini_coourt_keypoint = ( self.drawing_key_points[closest_key_point_index*2],
+                                        self.drawing_key_points[closest_key_point_index*2+1]
+                                        )
+        
+        mini_court_player_position = (closest_mini_coourt_keypoint[0]+mini_court_x_distance_pixels,
+                                      closest_mini_coourt_keypoint[1]+mini_court_y_distance_pixels
+                                        )
+
+        return  mini_court_player_position
     
     def convert_bounding_boxes_to_mini_court_coordinates(self,player_boxes, ball_boxes, original_court_key_points ):
         player_heights = {
