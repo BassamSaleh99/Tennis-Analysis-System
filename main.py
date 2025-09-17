@@ -1,6 +1,9 @@
 from utils import (read_video, 
-                   save_video)
-
+                   save_video,
+                   measure_distance,
+                   convert_pixel_distance_to_meters
+                   )
+import constants
 from trackers import PlayerTracker, BallTracker
 from court_line_detector import CourtLineDetector
 from mini_court import MiniCourt
@@ -48,6 +51,14 @@ def main():
         start_frame = ball_shot_frames[ball_shot_ind]
         end_frame = ball_shot_frames[ball_shot_ind+1]
         ball_shot_time_in_seconds = (end_frame-start_frame)/24 # 24fps
+
+        # Get distance covered by the ball
+        distance_covered_by_ball_pixels = measure_distance(ball_mini_court_detections[start_frame][1],
+                                                           ball_mini_court_detections[end_frame][1])
+        distance_covered_by_ball_meters = convert_pixel_distance_to_meters( distance_covered_by_ball_pixels,
+                                                                           constants.DOUBLE_LINE_WIDTH,
+                                                                           mini_court.get_width_of_mini_court()
+                                                                           ) 
 
     # Draw output
 
