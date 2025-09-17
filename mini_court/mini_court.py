@@ -9,7 +9,9 @@ from utils import (
     get_foot_position,
     get_closest_keypoint_index,
     get_height_of_bbox,
-    measure_xy_distance
+    measure_xy_distance,
+    get_center_of_bbox,
+    measure_distance
 )
 
 class MiniCourt():
@@ -194,6 +196,10 @@ class MiniCourt():
         output_ball_boxes= []
 
         for frame_num, player_bbox in enumerate(player_boxes):
+            ball_box = ball_boxes[frame_num][1]
+            ball_position = get_center_of_bbox(ball_box)
+            closest_player_id_to_ball = min(player_bbox.keys(), key=lambda x: measure_distance(ball_position, get_center_of_bbox(player_bbox[x])))
+
             output_player_bboxes_dict = {}
             for player_id, bbox in player_bbox.items():
                 foot_position = get_foot_position(bbox)
