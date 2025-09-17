@@ -43,6 +43,11 @@ def main():
     player_mini_court_detections, ball_mini_court_detections = mini_court.convert_bounding_boxes_to_mini_court_coordinates(player_detections, 
                                                                                                           ball_detections,
                                                                                                           court_keypoints)
+    
+    for ball_shot_ind in range(len(ball_shot_frames)-1):
+        start_frame = ball_shot_frames[ball_shot_ind]
+        end_frame = ball_shot_frames[ball_shot_ind+1]
+        ball_shot_time_in_seconds = (end_frame-start_frame)/24 # 24fps
 
     # Draw output
 
