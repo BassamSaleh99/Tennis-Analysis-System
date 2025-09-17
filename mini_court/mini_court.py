@@ -223,3 +223,20 @@ class MiniCourt():
                                                                             )
                 
                 output_player_bboxes_dict[player_id] = mini_court_player_position
+
+                if closest_player_id_to_ball == player_id:
+                    # Get The closest keypoint in pixels
+                    closest_key_point_index = get_closest_keypoint_index(ball_position,original_court_key_points, [0,2,12,13])
+                    closest_key_point = (original_court_key_points[closest_key_point_index*2], 
+                                        original_court_key_points[closest_key_point_index*2+1])
+                    
+                    mini_court_player_position = self.get_mini_court_coordinates(ball_position,
+                                                                            closest_key_point, 
+                                                                            closest_key_point_index, 
+                                                                            max_player_height_in_pixels,
+                                                                            player_heights[player_id]
+                                                                            )
+                    output_ball_boxes.append({1:mini_court_player_position})
+                    output_player_boxes.append(output_player_bboxes_dict)
+
+        return output_player_boxes , output_ball_boxes
