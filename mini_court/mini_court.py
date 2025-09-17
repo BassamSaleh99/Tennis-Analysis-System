@@ -5,7 +5,9 @@ sys.path.append('../')
 import constants
 from utils import (
     convert_meters_to_pixel_distance,
-    convert_pixel_distance_to_meters
+    convert_pixel_distance_to_meters,
+    get_foot_position,
+    get_closest_keypoint_index
 )
 
 class MiniCourt():
@@ -146,3 +148,19 @@ class MiniCourt():
         return self.court_drawing_width
     def get_court_drawing_keypoints(self):
         return self.drawing_key_points
+    
+    def convert_bounding_boxes_to_mini_court_coordinates(self,player_boxes, ball_boxes, original_court_key_points ):
+        player_heights = {
+            1: constants.PLAYER_1_HEIGHT_METERS,
+            2: constants.PLAYER_2_HEIGHT_METERS
+        }
+
+        output_player_boxes= []
+        output_ball_boxes= []
+
+        for frame_num, player_bbox in enumerate(player_boxes):
+            for player_id, bbox in player_bbox.items():
+                foot_position = get_foot_position(bbox)
+
+                # Get The closest keypoint in pixels
+                closest_key_point_index = get_closest_keypoint_index(foot_position,original_court_key_points, [0,2,12,13])
