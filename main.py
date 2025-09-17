@@ -46,7 +46,21 @@ def main():
     player_mini_court_detections, ball_mini_court_detections = mini_court.convert_bounding_boxes_to_mini_court_coordinates(player_detections, 
                                                                                                           ball_detections,
                                                                                                           court_keypoints)
-    
+    player_stats_data = [{
+        'frame_num':0,
+        'player_1_number_of_shots':0,
+        'player_1_total_shot_speed':0,
+        'player_1_last_shot_speed':0,
+        'player_1_total_player_speed':0,
+        'player_1_last_player_speed':0,
+
+        'player_2_number_of_shots':0,
+        'player_2_total_shot_speed':0,
+        'player_2_last_shot_speed':0,
+        'player_2_total_player_speed':0,
+        'player_2_last_player_speed':0,
+    } ]
+
     for ball_shot_ind in range(len(ball_shot_frames)-1):
         start_frame = ball_shot_frames[ball_shot_ind]
         end_frame = ball_shot_frames[ball_shot_ind+1]
