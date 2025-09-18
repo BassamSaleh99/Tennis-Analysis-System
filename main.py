@@ -106,6 +106,16 @@ def main():
 
         player_stats_data.append(current_player_stats)
 
+    player_stats_data_df = pd.DataFrame(player_stats_data)
+    frames_df = pd.DataFrame({'frame_num': list(range(len(video_frames)))})
+    player_stats_data_df = pd.merge(frames_df, player_stats_data_df, on='frame_num', how='left')
+    player_stats_data_df = player_stats_data_df.ffill()
+
+    player_stats_data_df['player_1_average_shot_speed'] = player_stats_data_df['player_1_total_shot_speed']/player_stats_data_df['player_1_number_of_shots']
+    player_stats_data_df['player_2_average_shot_speed'] = player_stats_data_df['player_2_total_shot_speed']/player_stats_data_df['player_2_number_of_shots']
+    player_stats_data_df['player_1_average_player_speed'] = player_stats_data_df['player_1_total_player_speed']/player_stats_data_df['player_2_number_of_shots']
+    player_stats_data_df['player_2_average_player_speed'] = player_stats_data_df['player_2_total_player_speed']/player_stats_data_df['player_1_number_of_shots']
+
     # Draw output
 
     ## Draw Player Bounding Boxes
