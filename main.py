@@ -1,7 +1,8 @@
 from utils import (read_video, 
                    save_video,
                    measure_distance,
-                   convert_pixel_distance_to_meters
+                   convert_pixel_distance_to_meters,
+                   draw_player_stats
                    )
 import constants
 from trackers import PlayerTracker, BallTracker
@@ -129,6 +130,9 @@ def main():
     output_video_frames = mini_court.draw_mini_court(output_video_frames)
     output_video_frames = mini_court.draw_points_on_mini_court(output_video_frames,player_mini_court_detections)
     output_video_frames = mini_court.draw_points_on_mini_court(output_video_frames,ball_mini_court_detections, color=(0,255,255)) 
+
+    # Draw Player Stats
+    output_video_frames = draw_player_stats(output_video_frames,player_stats_data_df)
 
     ## Draw frame number on top left corner
     for i, frame in enumerate(output_video_frames):
